@@ -58,8 +58,8 @@
     <!-- SECTION CREATE CASE FORM -->
     <div class="container-fluid">
       <div class="row">
-        <div class="col-4 p-5">
-          <form>
+        <div class="col-8 col-md-4 p-5">
+          <form onsubmit="app.CasesController.createCase()">
             <div class="mb-3">
               <label for="caseAgency" class="form-label"
                 >Agency</label
@@ -74,7 +74,7 @@
                 class="form-control"
                 placeholder="Your agency" />
             </div>
-          </form>
+          
           <div class="mb-3">
             <label for="caseReportedDate class="form-label"
               >Reported Date</label
@@ -88,6 +88,11 @@
               id="caseReportedDate"
               placeholder="" />
           </div>
+          <button title="plus" type="submit" class="btn btn-primary">
+            <i class="mdi mdi-plus">
+            </i>
+          </button>
+          </form>
         </div>
       </div>
     </div>

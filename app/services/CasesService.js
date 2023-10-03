@@ -1,4 +1,5 @@
 import { AppState } from "../AppState.js"
+import { Case } from "../models/Case.js"
 import { saveState } from "../utils/Store.js"
 
 function _saveCase() {
@@ -41,6 +42,17 @@ lockCase() {
   activeCase.unlocked = true
   console.log('[CASES SERVICE] Active case after locked:', activeCase)
   AppState.emit("activeCase")
+}
+
+createCase(caseData) {
+  console.log('[CASES SERVICE] Case Data:', caseData)
+
+  const newCase = new Case(caseData)
+
+  AppState.cases.push(newCase)
+  console.log('[CASES SERVICE] AppState.cases:', AppState.cases)
+  AppState.emit("cases")
+  _saveCase()
 }
 
 }

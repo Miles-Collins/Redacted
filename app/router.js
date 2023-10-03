@@ -12,7 +12,7 @@ export const router = [
     <div class="container-fluid">
       <div class="row mt-3 text-center">
         <div class="col-12">
-          <p class="fs-2">Total Cases: <span id="cases-count"></span></p>
+          <p class="fs-2"><span id="cases-count"></span> cases on file. </p>
         </div>
       </div>
       <div id="cases" class="row p-3">

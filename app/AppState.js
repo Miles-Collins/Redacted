@@ -31,7 +31,7 @@ class ObservableAppState extends EventEmitter {
 
   // NOTE Used to load initial data
   init() {
-
+    this.cases = loadState('cases', [Case])
   }
 
 }

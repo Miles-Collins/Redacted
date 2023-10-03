@@ -2,9 +2,11 @@ import { AppState } from "../AppState.js";
 import { casesService } from "../services/CasesService.js";
 import { Pop } from "../utils/Pop.js";
 import { setHTML } from "../utils/Writer.js";
+import {getFormData} from "../utils/FormHandler.js"
 
 function _drawCases() {
   let cases = AppState.cases
+  console.log("[CASES CONTROLLER] AppState.cases:", cases)
   let template = ''
   cases.forEach((c) => template += c.ListTemplate)
   setHTML('cases', template)
@@ -12,18 +14,18 @@ function _drawCases() {
 }
 
 // NOTE OLD WAY OF USING TEMPLATE ^^^^^^^^^^^ NEW WAY ABOVE
-// `
-//   <div  class="col-6 col-lg-4 p-3">
-//     <div onClick="app.CasesController.setActiveCase('${c.id}')" class="row justify-content-center flex-column align-items-center p-3 briefcase">
-//     <div class="handle d-flex align-items-end justify-content-center">
-//      <div class="handle-hole "></div>
-//     </div>
-//     <div class="case d-flex align-items-center justify-content-center">
-//        <div class="py-2 fs-1">${c.agency}</div>
-//     </div>
-//   </div>    
-//   </div>
-//   `
+  // `
+  //   <div  class="col-6 col-lg-4 p-3">
+  //     <div onClick="app.CasesController.setActiveCase('${c.id}')" class="row justify-content-center flex-column align-items-center p-3 briefcase">
+  //     <div class="handle d-flex align-items-end justify-content-center">
+  //      <div class="handle-hole "></div>
+  //     </div>
+  //     <div class="case d-flex align-items-center justify-content-center">
+  //        <div class="py-2 fs-1">${c.agency}</div>
+  //     </div>
+  //   </div>    
+  //   </div>
+  //   `
 
 function _drawActiveCase() {
   let activeCase = AppState.activeCase
@@ -54,14 +56,20 @@ function _drawActiveCase() {
 
 export class CasesController {
   constructor() {
+    // ON PAGE LOAD // onMounted
     Pop.success('Welcome to the Cases Page')
     _drawCases()
+
+    // WHEN CHANGED // computed
     AppState.on('activeCase', _drawActiveCase)
+    AppState.on('cases', _drawCases)
   }
 
-  testButton() {
-    Pop.success('The BUTTON works!')
-  }
+  // NOTE TESTING CONNECTION WITH CONTROLLER testButton()
+    // testButton() {
+    //   Pop.success('The BUTTON works!')
+    //
+  //  
 
   setActiveCase(caseId) {
     Pop.success(`[SETTING ACTIVE CASE ID]: ${caseId}`)
@@ -94,4 +102,15 @@ export class CasesController {
     casesService.saveCase(newContent)
     casesService.lockCase()
   }
+
+  createCase() {
+    console.log('[CASES CONTROLLER] Creating Case')
+    event.preventDefault()
+    const form = event.target
+    let caseData = getFormData(form)
+    console.log('[CASES CONTROLLER] Case Data:', caseData)
+
+    casesService.createCase(caseData)
+  }
+  
 }
